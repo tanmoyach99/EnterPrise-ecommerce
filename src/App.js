@@ -30,6 +30,8 @@ import SubCategory from "./Pages/SubCategory";
 import Shop from "./Pages/Shop";
 import Cart from "./Pages/Cart";
 import SideDrawer from "./Components/Drawer/SideDrawer";
+import Checkout from "./Pages/Checkout";
+import CreateCoupon from "./Pages/Admin/Coupons/CreateCoupon";
 
 function App() {
   const dispatch = useDispatch();
@@ -99,6 +101,9 @@ function App() {
         <UserRoutes path="/user/history">
           <UserHistory />
         </UserRoutes>
+        <UserRoutes path="/checkout">
+          <Checkout />
+        </UserRoutes>
         <UserRoutes path="/user/password">
           <Password />
         </UserRoutes>
@@ -125,6 +130,9 @@ function App() {
         </AdminRoutes>
         <AdminRoutes exact path="/admin/products">
           <AllProducts />
+        </AdminRoutes>
+        <AdminRoutes exact path="/admin/coupons">
+          <CreateCoupon />
         </AdminRoutes>
         <AdminRoutes exact path="/admin/updateProduct/:slug">
           <ProductUpdate />

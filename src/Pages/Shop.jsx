@@ -48,7 +48,7 @@ const Shop = () => {
 
   const fetchProducts = (arg) => {
     getProductsByQuery(arg).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setProducts(res.data);
     });
   };
