@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const Product = require("../models/product");
 const Cart = require("../models/cart");
+const Coupon = require("../models/coupon");
 
 exports.userCart = async (req, res) => {
   const { cart } = req.body;
@@ -56,9 +57,10 @@ exports.getUserCart = async (req, res) => {
     .exec();
   console.log(cart);
 
-  const { products, cartTotal, totalAfterDiscount } = cart;
-
-  res.json({ products, cartTotal, totalAfterDiscount });
+  if (cart !== null) {
+    const { products, cartTotal, totalAfterDiscount } = cart;
+    res.json({ products, cartTotal, totalAfterDiscount });
+  }
 };
 
 exports.emptyCart = async (req, res) => {
@@ -75,4 +77,39 @@ exports.userAddress = async (req, res) => {
   ).exec();
 
   res.json({ ok: true });
+};
+
+exports.applyCoupon = async (req, res) => {
+  const { coupon } = req.body;
+  //   console.log(coupon);
+  const validCoupon = await Coupon.findOne({ name: coupon }).exec();
+  if (validCoupon === null) {
+    return res.json({
+      err: "invalid Coupon",
+    });
+  }
+
+  //   console.log("valid coupon", validCoupon);
+
+  const user = await User.findOne({ email: req.user.email }).exec();
+
+  let { products, cartTotal } = await Cart.findOne({ orderedBy: user._id })
+    .populate("products.product", "_id title price")
+    .exec();
+
+  //    .populate("products.product", "_id title price")
+  //   2nd argument is for the field you chose to populate
+
+  //total after applying coupon to
+  let totalAfterDiscount = (
+    cartTotal -
+    (cartTotal * validCoupon.discount) / 100
+  ).toFixed(2);
+
+  await Cart.findOneAndUpdate(
+    { orderedBy: user._id },
+    { totalAfterDiscount },
+    { new: true }
+  );
+  res.json(totalAfterDiscount);
 };
