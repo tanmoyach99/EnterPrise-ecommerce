@@ -32,6 +32,7 @@ import Cart from "./Pages/Cart";
 import SideDrawer from "./Components/Drawer/SideDrawer";
 import Checkout from "./Pages/Checkout";
 import CreateCoupon from "./Pages/Admin/Coupons/CreateCoupon";
+import Payment from "./Pages/Payment";
 
 function App() {
   const dispatch = useDispatch();
@@ -100,6 +101,10 @@ function App() {
 
         <UserRoutes path="/user/history">
           <UserHistory />
+        </UserRoutes>
+
+        <UserRoutes path="/payment">
+          <Payment />
         </UserRoutes>
         <UserRoutes path="/checkout">
           <Checkout />

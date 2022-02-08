@@ -35,3 +35,12 @@ export const userAddress = async (authtoken, address) =>
       headers: { authtoken },
     }
   );
+
+export const applyCoupon = async (authtoken, coupon) =>
+  await axios.post(
+    "http://localhost:8000/api/user/cart/coupon ",
+    { coupon },
+    {
+      headers: { authtoken },
+    }
+  );

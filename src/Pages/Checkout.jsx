@@ -4,18 +4,24 @@ import { useSelector, useDispatch } from "react-redux";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
+  applyCoupon,
   emptyUserCart,
   getUserCart,
   userAddress,
 } from "../helperFunctions/user";
+import { useHistory } from "react-router-dom";
 
 const Checkout = () => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [address, setAddress] = useState("");
   const [savedAddress, setSavedAddress] = useState(false);
+  const [coupons, setCoupons] = useState("");
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
+  const [discountError, setDiscountError] = useState("");
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, coupon } = useSelector((state) => ({ ...state }));
+  const history = useHistory();
 
   useEffect(() => {
     getUserCart(user.token).then((res) => {
@@ -45,7 +51,73 @@ const Checkout = () => {
       setProducts([]);
       setTotal(0);
       alert("cart is empty");
+      setTotalAfterDiscount(0);
     });
+  };
+
+  const showAddress = () => {
+    return (
+      <>
+        <ReactQuill theme="snow" value={address} onChange={setAddress} />
+        <button className="btn btn-success mt-2" onClick={saveAddress}>
+          Save
+        </button>
+      </>
+    );
+  };
+
+  const showProductSummary = () => {
+    return products?.map((p, i) => {
+      return (
+        <div key={i}>
+          <p>
+            {p.product.title} ({p.color}) X {p.count}=
+            {p.product.price * p.count}{" "}
+          </p>
+        </div>
+      );
+    });
+  };
+
+  const applyDiscountCoupon = () => {
+    applyCoupon(user.token, coupons).then((res) => {
+      console.log(res.data);
+      if (res.data) {
+        setTotalAfterDiscount(res.data);
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: true,
+        });
+        //push in the redux
+      }
+      if (res.data.err) {
+        setDiscountError(res.data.err);
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: false,
+        });
+        //push in the redux
+      }
+    });
+  };
+
+  const showApplyCoupon = () => {
+    return (
+      <>
+        <input
+          onChange={(e) => {
+            setCoupons(e.target.value);
+            setDiscountError("");
+          }}
+          type="text"
+          className="form-control"
+        />
+        <button onClick={applyDiscountCoupon} className="btn btn-primary mt-2">
+          {" "}
+          Apply{" "}
+        </button>
+      </>
+    );
   };
 
   return (
@@ -55,36 +127,36 @@ const Checkout = () => {
         <br />
         <br />
         <br />
-        <ReactQuill theme="snow" value={address} onChange={setAddress} />
-        <button className="btn btn-success mt-2" onClick={saveAddress}>
-          Save
-        </button>
+        {showAddress()}
         <hr />
         <h4>Got Coupon?</h4>
         <br />
-        coupon input
+        {showApplyCoupon()}
+        <br />
+        {discountError && <p className="text-danger p-1"> {discountError} </p>}
       </div>
       <div className="col-md-6">
         <h4>Order Summary</h4>
         <hr />
         <p>Products -{products.length}</p>
         <hr />
-        {products?.map((p, i) => {
-          return (
-            <div key={i}>
-              <p>
-                {p.product.title} ({p.color}) X {p.count}=
-                {p.product.price * p.count}{" "}
-              </p>
-            </div>
-          );
-        })}
+        {showProductSummary()}
 
         <hr />
         <p>Cart Total : {total} </p>
+
+        {totalAfterDiscount > 0 && (
+          <div className="alert alert-success">
+            Discount applied. Total payable price: $ {totalAfterDiscount}
+          </div>
+        )}
         <div className="row">
           <div className="col-md-6">
-            <button disabled={!savedAddress} className="btn btn-danger">
+            <button
+              disabled={!savedAddress || !products.length}
+              onClick={() => history.push("./payment")}
+              className="btn btn-danger"
+            >
               Place Order
             </button>
           </div>
