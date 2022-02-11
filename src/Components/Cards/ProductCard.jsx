@@ -55,8 +55,8 @@ const ProductCard = ({ product }) => {
             src={images && images.length ? images[0].url : laptop}
             alt=""
             style={{
-              width: "20vw",
-              height: "40vh",
+              width: "25vw",
+              height: "50vh",
               objectFit: "cover",
             }}
             className="p-1 text-center"

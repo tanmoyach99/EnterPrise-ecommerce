@@ -1,8 +1,33 @@
+/* .slider-img{
+  width:50vw;
+  height:400px;
+  object-fit:cover
+} */
+.slider {
+  height: 100%;
+  /* position: fixed */
+}
 
-
-.slider img{
+/* .slider img{
   /* height: 450px; */
  
-  height: 50vh;
+
+  /* width:100px;
+  
+  
   object-fit:cover;
+} */ 
+.slider img{
+ height:70vh;
+ width:50% !important;
+ object-fit:cover
+ /* width:20vw */
+ /* width: 10vw; */
+
+ 
+ 
 }
+
+
+
+

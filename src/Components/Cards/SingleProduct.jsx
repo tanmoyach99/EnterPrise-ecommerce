@@ -66,7 +66,14 @@ const SingleProduct = ({ product, onStarClick, star }) => {
             infiniteLoop
           >
             {images &&
-              images.map((i) => <img src={i.url} key={i.url} alt="" />)}
+              images.map((i) => (
+                <img
+                  src={i.url}
+                  key={i.url}
+                  alt=""
+                  className="img-fluid slider-img"
+                />
+              ))}
           </Carousel>
         ) : (
           <Card

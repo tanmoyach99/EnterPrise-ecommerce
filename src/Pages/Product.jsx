@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import {
   getProductsForUpdate,
   getRelated,
-  getSingleProduct,
   ratingProducts,
 } from "../helperFunctions/productCRUD";
 import ProductCard from "../Components/Cards/ProductCard";

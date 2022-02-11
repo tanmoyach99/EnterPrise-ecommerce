@@ -6,7 +6,6 @@ import Register from "./Pages/Auth/Register";
 import Navbar from "./Components/Navbar/Navbar";
 import RegisterComplete from "./Pages/Auth/RegisterComplete";
 import { getAuth, getIdTokenResult, onAuthStateChanged } from "firebase/auth";
-
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import ForgotPassword from "./Pages/Auth/ForgotPassword";
