@@ -7,13 +7,14 @@ import { userCart } from "../helperFunctions/user";
 
 const Cart = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { cart, user } = useSelector((state) => ({ ...state }));
   const getTotal = () => {
     return cart.reduce((currentValue, nextValue) => {
       return currentValue + nextValue.count * nextValue.price;
     }, 0);
   };
-  const saveOrderInbDb = () => {
+  const saveOrderInDb = () => {
     alert("save order to db");
     userCart(cart, user.token)
       .then((res) => {
@@ -22,6 +23,19 @@ const Cart = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  const saveCashInOrderDb = () => {
+    dispatch({ type: "COD", payload: true });
+    alert("save order to db");
+    userCart(cart, user.token)
+      .then((res) => {
+        console.log("CART REQ RES", res);
+
+        if (res.data.ok) history.push("/checkout");
+      })
+      .catch((err) => console.log(err));
+  };
+
   const showCartItems = () => {
     return (
       <table className="table table-hover">
@@ -43,6 +57,7 @@ const Cart = () => {
       </table>
     );
   };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -76,14 +91,25 @@ const Cart = () => {
           Total- <b> $ {getTotal()} </b>
           <hr />
           {user ? (
-            <button
-              onClick={saveOrderInbDb}
-              className="btn btn-dark mt-2"
-              disabled={!cart.length}
-            >
-              {" "}
-              Proceed to checkout
-            </button>
+            <>
+              <button
+                onClick={saveOrderInDb}
+                className="btn btn-dark mt-2"
+                disabled={!cart.length}
+              >
+                {" "}
+                Proceed to checkout
+              </button>{" "}
+              <br />
+              <button
+                onClick={saveCashInOrderDb}
+                className="btn btn-info text-white mt-2"
+                disabled={!cart.length}
+              >
+                {" "}
+                Cash On Delivery
+              </button>
+            </>
           ) : (
             <button className="btn btn-dark mt-2">
               <Link to={{ pathname: "/login", state: { from: "cart" } }}>

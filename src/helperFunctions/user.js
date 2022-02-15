@@ -44,3 +44,59 @@ export const applyCoupon = async (authtoken, coupon) =>
       headers: { authtoken },
     }
   );
+
+export const createOrder = async (authtoken, stripeResponse) =>
+  await axios.post(
+    "http://localhost:8000/api/user/order ",
+    { stripeResponse },
+    {
+      headers: { authtoken },
+    }
+  );
+
+export const createOrderWithCash = async (authtoken, COD) =>
+  await axios.post(
+    "http://localhost:8000/api/user/cash/order ",
+    { COD },
+    {
+      headers: { authtoken },
+    }
+  );
+
+export const getUserOrders = async (authtoken) =>
+  await axios.get(
+    "http://localhost:8000/api/user/orders",
+
+    {
+      headers: { authtoken },
+    }
+  );
+
+export const addToWishList = async (productId, authtoken) =>
+  await axios.post(
+    "http://localhost:8000/api/user/wishlist",
+    { productId },
+
+    {
+      headers: { authtoken },
+    }
+  );
+
+export const getWishList = async (authtoken) =>
+  await axios.get(
+    "http://localhost:8000/api/user/wishlist",
+
+    {
+      headers: { authtoken },
+    }
+  );
+
+export const updateWishlist = async (productId, authtoken) =>
+  await axios.put(
+    `http://localhost:8000/api/user/wishlist/${productId}`,
+    {},
+
+    {
+      headers: { authtoken },
+    }
+  );

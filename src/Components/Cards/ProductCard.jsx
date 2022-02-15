@@ -11,12 +11,12 @@ import { showAverage } from "../../helperFunctions/ratings";
 
 const ProductCard = ({ product }) => {
   const [toolTip, setToolTip] = useState("click to add");
-  const { images, title, slug, description, price } = product;
+  const { images, title, slug, description, price, quantity } = product;
   const { Meta } = Card;
   const { user, cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
 
-  const handelAddToCart = () => {
+  const handleAddToCart = () => {
     let cart = [];
     if (typeof window !== "undefined") {
       if (localStorage.getItem("cart")) {
@@ -26,8 +26,8 @@ const ProductCard = ({ product }) => {
         ...product,
         count: 1,
       });
-      let unique = _.uniqWith(cart, _.isEqual);
-      console.log(unique);
+      let unique = _.uniqWith(cart, _.isEqual); //lodash method
+
       localStorage.setItem("cart", JSON.stringify(unique));
       setToolTip("added");
       dispatch({
@@ -40,6 +40,7 @@ const ProductCard = ({ product }) => {
       });
     }
   };
+  console.log("qunatity", quantity, title);
 
   return (
     <div className="col-md-4 mb-1 ">
@@ -66,13 +67,13 @@ const ProductCard = ({ product }) => {
           <Link to={`/product/${slug}`}>
             <EyeOutlined className="text-danger" /> <br /> view product
           </Link>,
-          <Tooltip title={toolTip}>
-            <span onClick={handelAddToCart}>
+          <Tooltip title={quantity > 1 ? toolTip : "sorry,out of stock!!"}>
+            <span onClick={quantity > 1 && handleAddToCart}>
               <ShoppingCartOutlined
                 // onClick={() => handleRemove(slug)}
                 className="text-warning"
               />{" "}
-              Add To Cart
+              {quantity > 1 ? "Add To Cart" : "Out Of Stock"}
             </span>
           </Tooltip>,
         ]}

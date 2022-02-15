@@ -5,6 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
   applyCoupon,
+  createOrderWithCash,
   emptyUserCart,
   getUserCart,
   userAddress,
@@ -20,7 +21,7 @@ const Checkout = () => {
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
   const [discountError, setDiscountError] = useState("");
   const dispatch = useDispatch();
-  const { user, coupon } = useSelector((state) => ({ ...state }));
+  const { user, coupon, COD } = useSelector((state) => ({ ...state }));
   const history = useHistory();
 
   useEffect(() => {
@@ -120,6 +121,16 @@ const Checkout = () => {
     );
   };
 
+  const createCashOnDelivery = () => {
+    createOrderWithCash(user.token, COD).then((res) => {
+      console.log("user cash order created", res);
+      // dispatch({
+      //   action:""
+      // })
+    });
+    //
+  };
+
   return (
     <div className="row">
       <div className="col-md-5 offset-md-1">
@@ -152,13 +163,23 @@ const Checkout = () => {
         )}
         <div className="row">
           <div className="col-md-6">
-            <button
-              disabled={!savedAddress || !products.length}
-              onClick={() => history.push("./payment")}
-              className="btn btn-danger"
-            >
-              Place Order
-            </button>
+            {COD ? (
+              <button
+                disabled={!savedAddress || !products.length}
+                onClick={createCashOnDelivery}
+                className="btn btn-danger"
+              >
+                Place Order
+              </button>
+            ) : (
+              <button
+                disabled={!savedAddress || !products.length}
+                onClick={() => history.push("./payment")}
+                className="btn btn-danger"
+              >
+                Place Order
+              </button>
+            )}
           </div>
           <div className="col-md-6">
             <button

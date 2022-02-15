@@ -6,6 +6,7 @@ import { useState } from "react";
 import { createPaymentIntent } from "../helperFunctions/stripe";
 import { Card } from "antd";
 import { DollarOutlined, CheckOutlined } from "@ant-design/icons";
+import { createOrder, emptyUserCart } from "../helperFunctions/user";
 
 const StripeCheckout = () => {
   const history = useHistory();
@@ -51,7 +52,20 @@ const StripeCheckout = () => {
       setError(`payment failed ${payload.error.message} `);
       setProcessing(false);
     } else {
-      console.log(payload);
+      createOrder(user.token, payload).then((res) => {
+        if (res.data.ok) {
+          if (typeof window !== "undefined") localStorage.removeItem("cart");
+          dispatch({
+            type: "REMOVE_FROM_CART",
+            payload: [],
+          });
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: false,
+          });
+          emptyUserCart(user.token);
+        }
+      });
       setError(null);
       setProcessing(false);
       setSuccess(true);
