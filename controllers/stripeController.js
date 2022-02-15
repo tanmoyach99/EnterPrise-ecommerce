@@ -8,9 +8,10 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 exports.createPaymentIntent = async (req, res) => {
   console.log(req.body.couponApplied);
   const user = await User.findOne({ email: req.user.email }).exec();
-  const { cartTotal, totalAfterDiscount } = await Cart.findOne({
+  const cart = await Cart.findOne({
     orderedBy: user._id,
   }).exec();
+  const { cartTotal, totalAfterDiscount } = cart;
 
   let finalAmount = 0;
   if (req.body.couponApplied && totalAfterDiscount) {

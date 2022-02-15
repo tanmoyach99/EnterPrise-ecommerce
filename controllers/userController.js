@@ -2,6 +2,8 @@ const User = require("../models/user");
 const Product = require("../models/product");
 const Cart = require("../models/cart");
 const Coupon = require("../models/coupon");
+const Order = require("../models/order");
+const uniqueid = require("uniqueid");
 
 exports.userCart = async (req, res) => {
   const { cart } = req.body;
@@ -112,4 +114,114 @@ exports.applyCoupon = async (req, res) => {
     { new: true }
   ).exec();
   res.json(totalAfterDiscount);
+};
+exports.createOrder = async (req, res) => {
+  const { paymentIntent } = req.body.stripeResponse;
+  const user = await User.findOne({ email: req.user.email }).exec();
+
+  let { products } = await Cart.findOne({ orderedBy: user._id }).exec();
+
+  const newOrder = await new Order({
+    products,
+    paymentIntent,
+    orderedBy: user._id,
+  }).save();
+
+  //product stock and sold count updated accordingly
+
+  let bulkOption = products.map((item) => {
+    return {
+      updateOne: {
+        filter: {
+          _id: item.product._id,
+        },
+        update: {
+          $inc: { quantity: -item.count, sold: +item.count },
+        },
+      },
+    };
+  });
+  let updated = await Product.bulkWrite(bulkOption, {});
+
+  res.json({ ok: true });
+};
+
+exports.orders = async (req, res) => {
+  let user = await User.findOne({ email: req.user.email }).exec();
+  console.log(user, "user");
+
+  let userOrders = await Order.find({ orderedBy: user._id })
+    .populate("products.product")
+    .exec();
+
+  res.json(userOrders);
+};
+exports.addToWishList = async (req, res) => {
+  const { productId } = req.body;
+  const user = await User.findOneAndUpdate(
+    { email: req.user.email },
+    { $addToSet: { wishlist: productId } }
+  ).exec();
+
+  res.json({ ok: true });
+};
+
+exports.wishlist = async (req, res) => {
+  const list = await User.findOne({ email: req.user.email })
+    .select("wishlist")
+    .populate("wishlist")
+    .exec();
+  res.json(list);
+};
+
+exports.wishlistUpdate = async (req, res) => {
+  const { productId } = req.params;
+  const user = await User.findOneAndUpdate(
+    { email: req.user.email },
+    { $pull: { wishlist: productId } }
+  ).exec();
+  res.json({ ok: true });
+};
+
+exports.createCashOrder = async (req, res) => {
+  const { COD } = req.body;
+  if (!COD) {
+    return res.status(400).send("Create cash on delivery ordered falied");
+  }
+
+  //if COD is true,create order with cash on delivery
+  const user = await User.findOne({ email: req.user.email }).exec();
+
+  let userCart = await Cart.findOne({ orderedBy: user._id }).exec();
+
+  const newOrder = await new Order({
+    products: userCart.products,
+    paymentIntent: {
+      id: uniqueid(),
+      amount: userCart.cartTotal,
+      currency: "usd",
+      status: "Cash On Delivery",
+      created: Date.now(),
+      payment_method_types: ["Cash"],
+    },
+    orderedBy: user._id,
+  }).save();
+
+  //product stock and sold count updated accordingly
+
+  let bulkOption = userCart.products.map((item) => {
+    return {
+      updateOne: {
+        filter: {
+          _id: item.product._id,
+        },
+        update: {
+          $inc: { quantity: -item.count, sold: +item.count },
+        },
+      },
+    };
+  });
+  let updated = await Product.bulkWrite(bulkOption, {});
+
+  res.json({ ok: true });
 };
