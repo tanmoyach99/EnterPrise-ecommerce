@@ -77,7 +77,7 @@ const UserHistory = () => {
   // };
 
   const showEachOrders = () => {
-    return orders.map((order, i) => {
+    return orders.reverse.map((order, i) => {
       return (
         <div key={i} className="m-5 p-3 card">
           <ShowPaymentInfo order={order} />

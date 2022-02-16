@@ -64,6 +64,7 @@ const StripeCheckout = () => {
             payload: false,
           });
           emptyUserCart(user.token);
+          history.push("/user/history");
         }
       });
       setError(null);

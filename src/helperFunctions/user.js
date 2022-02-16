@@ -54,10 +54,10 @@ export const createOrder = async (authtoken, stripeResponse) =>
     }
   );
 
-export const createOrderWithCash = async (authtoken, COD) =>
+export const createOrderWithCash = async (authtoken, COD, coupon) =>
   await axios.post(
     "http://localhost:8000/api/user/cash/order ",
-    { COD },
+    { COD, couponApplied: coupon },
     {
       headers: { authtoken },
     }

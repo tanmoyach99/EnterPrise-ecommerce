@@ -122,13 +122,28 @@ const Checkout = () => {
   };
 
   const createCashOnDelivery = () => {
-    createOrderWithCash(user.token, COD).then((res) => {
+    createOrderWithCash(user.token, COD, coupon).then((res) => {
       console.log("user cash order created", res);
-      // dispatch({
-      //   action:""
-      // })
+      if (res.data.ok) {
+        if (typeof window !== "undefined") localStorage.removeItem("cart");
+        dispatch({
+          type: "ADD_TO_CART",
+          payload: [],
+        });
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: false,
+        });
+        dispatch({
+          type: "COD",
+          payload: false,
+        });
+      }
+      emptyUserCart(user.token);
+      setTimeout(() => {
+        history.push("/user/history");
+      }, 1000);
     });
-    //
   };
 
   return (
