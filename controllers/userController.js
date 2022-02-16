@@ -184,7 +184,7 @@ exports.wishlistUpdate = async (req, res) => {
 };
 
 exports.createCashOrder = async (req, res) => {
-  const { COD } = req.body;
+  const { COD, couponApplied } = req.body;
   if (!COD) {
     return res.status(400).send("Create cash on delivery ordered falied");
   }
@@ -194,17 +194,25 @@ exports.createCashOrder = async (req, res) => {
 
   let userCart = await Cart.findOne({ orderedBy: user._id }).exec();
 
+  let finalAmount = 0;
+  if (req.body.couponApplied && userCart.totalAfterDiscount) {
+    finalAmount = userCart.totalAfterDiscount * 100;
+  } else {
+    finalAmount = userCart.cartTotal * 100;
+  }
+
   const newOrder = await new Order({
     products: userCart.products,
     paymentIntent: {
       id: uniqueid(),
-      amount: userCart.cartTotal,
+      amount: finalAmount,
       currency: "usd",
       status: "Cash On Delivery",
       created: Date.now(),
       payment_method_types: ["Cash"],
     },
     orderedBy: user._id,
+    orderStatus: "Cash On Delivery",
   }).save();
 
   //product stock and sold count updated accordingly
@@ -222,6 +230,8 @@ exports.createCashOrder = async (req, res) => {
     };
   });
   let updated = await Product.bulkWrite(bulkOption, {});
+
+  console.log(newOrder);
 
   res.json({ ok: true });
 };
