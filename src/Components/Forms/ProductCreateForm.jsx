@@ -21,9 +21,9 @@ const ProductCreateForm = ({
     );
   }
 
-  const handleSelectChange = (value) => {
-    console.log(`selected ${value}`);
-  };
+  // const handleSelectChange = (value) => {
+  //   console.log(`selected ${value}`);
+  // };
   const {
     title,
     description,

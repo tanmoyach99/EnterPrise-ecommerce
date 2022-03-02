@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import ImageUpload from "../../../Components/Forms/ImageUpload";
 import CategoryForm from "../../../Components/Forms/CategoryForm";
 import LocalSearch from "../../../Components/Forms/LocalSearch";
 import AdminNav from "../../../Components/Navbar/AdminNav";
@@ -14,6 +15,7 @@ import {
 
 const CategoryCreate = () => {
   const [name, setName] = useState("");
+  const [value, setValue] = useState([]);
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const { user } = useSelector((state) => ({ ...state }));
@@ -31,7 +33,7 @@ const CategoryCreate = () => {
     e.preventDefault();
     setLoading(true);
 
-    createCategory({ name }, user.token)
+    createCategory({ name, images: value }, user.token)
       .then((res) => {
         toast.success(`${res.data.name} is created`);
         console.log(res);
@@ -67,6 +69,7 @@ const CategoryCreate = () => {
         </div>
         <div className="col-md-10">
           <h4> Create CATEGORY</h4>
+          <ImageUpload values={value} setValues={setValue} />
           <CategoryForm
             handleSubmit={handleSubmit}
             name={name}

@@ -189,7 +189,7 @@ const Checkout = () => {
             ) : (
               <button
                 disabled={!savedAddress || !products.length}
-                onClick={() => history.push("./payment")}
+                onClick={() => history.push("/user/payment")}
                 className="btn btn-danger"
               >
                 Place Order

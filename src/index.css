@@ -1,33 +1,436 @@
-/* .slider-img{
-  width:50vw;
-  height:400px;
-  object-fit:cover
-} */
+
+body{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+
+
+.top-nav a{
+  text-decoration:none;
+  color: darkgray;
+
+}
+.top-nav a:hover{
+  color: red;
+}
+.navbar-2 a{
+  color: black;
+  
+ 
+}
+.header{
+  display:flex;
+  background-color: rgb(248, 247, 247);
+  padding: 5px;
+}
+.header-banner{
+  flex: 4;
+}
+.nav-img{
+  width:15vw;
+  margin-top: -2vh
+
+
+}
+.nav-category{
+  flex:1;
+  margin-left:3rem;
+  width:2rem;
+  padding: 10px;
+ 
+}
+.dropdown-category{
+  width: 14vw;
+  height:5vh;
+
+  padding: 10px;
+  border:1px solid goldenrod;
+  
+}
+
+
 .slider {
-  height: 100%;
+  height: 70% !important;
   /* position: fixed */
 }
 
-/* .slider img{
-  /* height: 450px; */
- 
-
-  /* width:100px;
-  
-  
+.cat-img{
+  width:40vw;
+    height:40vh;
   object-fit:cover;
-} */ 
-.slider img{
- height:70vh;
- width:50% !important;
- object-fit:cover
- /* width:20vw */
- /* width: 10vw; */
+  border-radius:10px 
+ 
+}
+.container-banner{
+  position:absolute;
+  top:220px;
+ 
+}
+ .jumbotron{
+  background-image:url('./images/banner-1.jpg');
+  background-position: center;
+  background-size: cover;
+} 
 
- 
- 
+.footer span {
+  cursor: pointer;
+
+}
+
+.footer span:hover {
+  color: orange;
+}
+
+.span-text:hover {
+  color: orange;
+}
+
+.span-text:hover {
+  cursor: pointer !;
+  color: red !important
 }
 
 
+.card .card-img-top-hover {
+  display: none
+}
+
+.card:hover .card-img-top-hover {
+  display: block
+}
+
+.card:hover .card-img-top {
+  display: none
+}
+
+.card .card-img-top img {
+  width: 20vw;
+  height: 20vh;
+  object-fit: cover;
+}
+
+.card .add-cart-fnc {
+  display: none
+}
+
+.card:hover .add-cart-fnc {
+  display: block
+}
+
+.text-banner {
+  position: absolute;
+
+}
+
+.text-banner {
+  background: url("./images/pexels-photo-3697717.jpeg");
+  opacity: 0.8;
+  z-index: -1;
+  background-position: center;
+  background-size: cover;
+  width: 20vw;
+  height: 120vh;
+
+  border-radius: 10px
+}
+
+.featured {
+  background: url("./images/laptop-1.jpg");
+  opacity: 0.9;
+  z-index: -1;
+  background-position: center;
+  background-size: cover;
+  width: 20vw;
+  height: 148vh;
+  color: gray;
+  border-radius: 10px
+}
+
+.img-banner {
+  border-radius: 10px;
+  width: 65vw;
+}
+
+.more-section ul li a{
+ text-decoration:none !important;
+ list-style: none;
+
+}
+
+/* .img-banner-2 {
+  border-radius: 10px;
+  width: 20vw;
+  height: 50vh !important;
+  opacity: 0.8
+} */
+
+
+
+/* Extra small devices (phones, 600px and down) */
+
+ @media only screen and (max-width: 600px) {
+   .slider-1 {
+     top: 2vh;
+     position: absolute;
+     align-items: center;
+     text-align: center;
+
+   }
+   .slider-1 h1 {
+     font-size: 1rem
+   }
+   .slider-1 h3 {
+     font-size: 0.5rem;
+   }
+   .slider-1 button {
+     width: 6rem;
+     font-size: 0.5rem;
+   }
+
+  
+   .slider-3 {
+     top: 2vh;
+     left: 20vw !important;
+     position: absolute;
+   }
+
+   .slider-3 h1 {
+     font-size: 1rem
+   }
+
+   .slider-3 h3 {
+     font-size: 0.5rem;
+   }
+
+   .slider-3 button {
+     margin-top: -0.8rem;
+     width: 4rem;
+     font-size: 0.5rem;
+   }
+   .slider-4{
+      position: absolute;
+      top: 0.5vh;
+      
+     
+   }
+   .slider-4 h1{
+     font-size: 1rem;
+
+   }
+   .slider-4 h3 {
+     font-size: 0.5rem;
+
+   }
+   .slider-4 button{
+     
+        width: 4rem;
+        font-size: 0.5rem;
+      
+      
+   }
+   .slider-5 {
+     position: absolute;
+     top: 0.5vh;
+     right: 30vw !important;
+   }
+
+   .slider-5 h1 {
+     font-size: 1rem
+   }
+   .slider-5 h3{
+     font-size: 0.5rem;
+   }
+
+   .slider-5 button {
+     width:4rem;
+     font-size: 0.5rem;
+     margin-top:-0.8rem;
+   } 
+    .nav-category {
+      display: none
+    }
+     .single-card img {
+      
+           width: 60vw !important;
+            
+         
+    }
+    .slider-product{
+      display:none
+    }
+    .featured-product .featured{
+      display:none !important;
+    }
+    .footer-menu{
+      display:flex !important;
+      flex-direction:column !important;
+      align-items:center !important;
+      justify-content:center !important;
+      
+    }
+
+  
+}
+
+
+
+@media only screen and (max-width: 768px) {
+  .footer-menu {
+    display: flex !important;
+    flex-direction: column !important;
+     align-items:center !important;
+     justify-content:center !important;
+
+  }
+      .slider-product {
+        display: none
+      }
+    .featured-product  .featured {
+        display: none !important;
+      }
+
+    .single-card img {
+
+      width: 60vw !important;
+
+
+    }
+   .slider-1 {
+     top: 4vh;
+     position: absolute;
+     align-items: center;
+     text-align: center;
+
+   }
+   .nav-category {
+     display: none
+   }
+
+   .slider-1 h1 {
+     font-size: 3rem
+   }
+
+   .slider-1 h3 {
+     font-size: 2rem;
+   }
+
+   .slider-1 button {
+     margin-top: 4rem;
+     width: 10rem;
+     font-size: 1.0rem;
+   }
+
+
+   .slider-3 {
+     top:2vh;
+     left: 20vw !important;
+     position: absolute;
+
+
+   }
+
+   .slider-3 h1 {
+     font-size: 3rem
+   }
+
+   .slider-3 h3 {
+     font-size: 2rem;
+   }
+
+   .slider-3 button {
+     margin-top: 5rem;
+     width: 10rem;
+     font-size: 1.0rem;
+   }
+
+   .slider-5 {
+     position: absolute;
+     top: 2vh;
+     right: 28vw !important;
+   }
+
+   .slider-5 h3 {
+     font-size: 2rem
+   }
+
+   .slider-5 h3 {
+     font-size: 1.5rem;
+   }
+
+   .slider-5 button {
+     width: 10rem;
+     font-size: 1.0rem;
+   }
+
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+   .slider-1 {
+     top: 20vh;
+     position: absolute;
+     align-items: center;
+     text-align: center;
+
+   }
+   .slider-1 h1 {
+     font-size: 3rem
+   }
+
+   .slider-1 h3 {
+     font-size: 2rem;
+   }
+
+   .slider-1 button {
+     margin-top: 5rem;
+     width: 15rem;
+     font-size: 1.0rem;
+   }
+
+
+   .slider-3 {
+     top: 10vh;
+     left: 25vw !important;
+     position: absolute;
+
+
+   }
+
+   .slider-3 h1 {
+     font-size: 3rem
+   }
+
+   .slider-3 h3 {
+     font-size: 2rem;
+   }
+
+   .slider-3 button {
+     margin-top: 5rem;
+     width: 10rem;
+     font-size: 1.5rem;
+   }
+
+   .slider-5 {
+     position: absolute;
+     top: 15vh;
+     right: 30vw !important;
+   }
+
+   .slider-5 h3 {
+     font-size: 2rem
+   }
+
+   .slider-5 h3 {
+     font-size: 1.5rem;
+   }
+
+   .slider-5 button {
+     width: 15rem;
+     font-size: 2rem;
+   }
+
+}
 
 

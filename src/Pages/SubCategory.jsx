@@ -18,7 +18,7 @@ const SubCategory = () => {
       setProducts(res.data.subsProduct);
       setLoading(false);
     });
-  }, []);
+  }, [slug]);
 
   return (
     <div className="container">

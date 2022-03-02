@@ -18,9 +18,9 @@ export const showAverage = (p) => {
         <span>
           <StarRating
             rating={result}
-            starRatedColor="red"
+            starRatedColor="goldenrod"
             editing={false}
-            starDimension="20px"
+            starDimension="15px"
             starSpacing="2px"
           />{" "}
           ({p.ratings.length})

@@ -4,7 +4,7 @@ import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import laptop from "../../images/laptop.jpg";
+import laptop from "../../images/laptop";
 import { Link, useParams } from "react-router-dom";
 
 import { showAverage } from "../../helperFunctions/ratings";
@@ -40,27 +40,20 @@ const ProductCard = ({ product }) => {
       });
     }
   };
-  console.log("qunatity", quantity, title);
 
   return (
-    <div className="col-md-4 mb-1 ">
-      {product && product.ratings && product.ratings.length > 0 ? (
-        showAverage(product)
-      ) : (
-        <div className="text-center pt-1 mb-1"> No rating yet</div>
-      )}
-
+    <div className="col-md-4 mb-1 single-card ">
       <Card
         cover={
           <img
             src={images && images.length ? images[0].url : laptop}
             alt=""
             style={{
-              width: "25vw",
-              height: "50vh",
+              width: "20vw",
+              height: "30vh",
               objectFit: "cover",
             }}
-            className="p-1 text-center"
+            className="p-1 text-center img-fluid card-img"
           />
         }
         actions={[
@@ -82,6 +75,12 @@ const ProductCard = ({ product }) => {
           title={title}
           description={`${description && description.substring(0, 40)}....`}
         />
+        {product && product.ratings && product.ratings.length > 0 ? (
+          showAverage(product)
+        ) : (
+          <div className="text-center pt-1 mb-1"> No rating yet</div>
+        )}
+
         <h6 className="text-danger mt-1">$ {price} </h6>
       </Card>
     </div>

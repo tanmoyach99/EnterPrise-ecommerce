@@ -4,6 +4,7 @@ import { getProducts, productCount } from "../../helperFunctions/productCRUD";
 import LoadingCard from "../Cards/LoadingCard";
 import ProductCard from "../Cards/ProductCard";
 import { Pagination } from "antd";
+import banner from "../../images/pexels-photo-3697717.jpeg";
 
 const NewArrivals = () => {
   const [product, setProduct] = useState([]);
@@ -30,11 +31,10 @@ const NewArrivals = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="p-5">
       {loading ? (
-        ""
+        <LoadingCard count={product.length} />
       ) : (
-        // <LoadingCard count={product.length} />
         <div className="row mb-5">
           {product.map((product) => (
             <ProductCard product={product} key={product._id} />

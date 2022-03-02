@@ -19,7 +19,7 @@ const Cart = () => {
     userCart(cart, user.token)
       .then((res) => {
         console.log("CART REQ RES", res);
-        if (res.data.ok) history.push("/checkout");
+        if (res.data.ok) history.push("/user/checkout");
       })
       .catch((err) => console.log(err));
   };
@@ -31,7 +31,7 @@ const Cart = () => {
       .then((res) => {
         console.log("CART REQ RES", res);
 
-        if (res.data.ok) history.push("/checkout");
+        if (res.data.ok) history.push("/user/checkout");
       })
       .catch((err) => console.log(err));
   };

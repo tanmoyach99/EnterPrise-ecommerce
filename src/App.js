@@ -3,7 +3,6 @@ import { Switch, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
-import Navbar from "./Components/Navbar/Navbar";
 import RegisterComplete from "./Pages/Auth/RegisterComplete";
 import { getAuth, getIdTokenResult, onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
@@ -32,6 +31,8 @@ import SideDrawer from "./Components/Drawer/SideDrawer";
 import Checkout from "./Pages/Checkout";
 import CreateCoupon from "./Pages/Admin/Coupons/CreateCoupon";
 import Payment from "./Pages/Payment";
+import HomeNavbar from "./Components/Navbar/HomeNavbar";
+import CategoryNav from "./Components/Navbar/CategoryNav";
 
 function App() {
   const dispatch = useDispatch();
@@ -62,50 +63,48 @@ function App() {
   }, []);
   return (
     <>
-      <Navbar />
+      <HomeNavbar />
       <SideDrawer />
       <Switch>
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/login">
+        <Route exact path="/login">
           <Login />
         </Route>
-        <Route path="/shop">
+        <Route exact path="/shop">
           <Shop />
         </Route>
-        <Route path="/cart">
+        <Route exact path="/cart">
           <Cart />
         </Route>
-        <Route path="/register">
+        <Route exact path="/register">
           <Register />
         </Route>
-        <Route path="/complete">
+        <Route exact path="/complete">
           <RegisterComplete />
         </Route>
-        <Route path="/forgotPassword">
+        <Route exact path="/forgotPassword">
           <ForgotPassword />
         </Route>
-        <Route path="/product/:slug">
+        <Route exact path="/product/:slug">
           <Product />
         </Route>
 
-        <Route path="/category/:slug">
-          <Category />
-        </Route>
+        <Route exact path="/:slug" render={() => <Category />} />
 
-        <Route path="/sub/:slug">
+        <Route exact path="/sub/:slug">
           <SubCategory />
         </Route>
 
-        <UserRoutes path="/user/history">
+        <UserRoutes exact path="/user/history">
           <UserHistory />
         </UserRoutes>
 
-        <UserRoutes path="/payment">
+        <UserRoutes path="/user/payment">
           <Payment />
         </UserRoutes>
-        <UserRoutes path="/checkout">
+        <UserRoutes path="/user/checkout">
           <Checkout />
         </UserRoutes>
         <UserRoutes path="/user/password">

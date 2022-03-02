@@ -28,6 +28,14 @@ export const updateCategory = async (slug, category, authtoken) => {
     { headers: { authtoken } }
   );
 };
+// export const updateCategoryWithSub = async (id, category, authtoken) => {
+//   return await axios.put(
+//     `http://localhost:8000/api/category`,
+//     category,
+
+//     { headers: { authtoken } }
+//   );
+// };
 
 export const createCategory = async (category, authtoken) => {
   return await axios.post(

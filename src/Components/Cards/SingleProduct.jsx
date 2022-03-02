@@ -4,7 +4,7 @@ import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
-import laptop from "../../images/laptop.jpg";
+import laptop from "../../images/laptop";
 import ProductListItem from "./ProductListItem";
 import StarRating from "react-star-ratings";
 import RatingModal from "../modal/RatingModal";
@@ -112,9 +112,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         </Tabs>
       </div>
       <div className="col-md-5">
-        <div className="bg bg-success p-3 rounded">
+        <div className="bg bg-light p-3 rounded">
           {" "}
-          <h1 className="text-white text-center">{title} </h1>{" "}
+          <h1 className="text-secondary text-center">{title} </h1>{" "}
           {/* <div>ratings</div> */}
         </div>
         {product && product.ratings && product.ratings.length > 0 ? (

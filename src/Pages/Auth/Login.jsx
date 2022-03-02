@@ -45,9 +45,9 @@ const Login = () => {
       history.push(intended.from);
     } else {
       if (res.data.role === "admin") {
-        history.push("/admin/dashboard");
+        history.push("/");
       } else {
-        history.push("/user/history");
+        history.push("/");
       }
     }
   };
@@ -108,7 +108,6 @@ const Login = () => {
             roleBasedRedirect(res);
           })
           .catch((err) => console.log(err, "err happened"));
-        // history.push("/");
       })
       .catch((err) => {
         console.log(err);

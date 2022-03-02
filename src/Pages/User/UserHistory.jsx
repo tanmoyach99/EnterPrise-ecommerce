@@ -22,7 +22,8 @@ const UserHistory = () => {
     getUserOrders(user.token).then((res) => {
       setOrders(res.data);
     });
-  }, []);
+  }, [user.token]);
+  console.log(orders);
 
   const showOrderInTable = (order) => {
     return (
@@ -38,19 +39,19 @@ const UserHistory = () => {
           </tr>
         </thead>
         <tbody>
-          {order.products.map((p, i) => {
+          {order?.products.map((p, i) => {
             return (
               <tr key={i}>
                 <td>
                   {" "}
-                  <b>{p.product.title}</b>{" "}
+                  <b>{p?.product?.title}</b>{" "}
                 </td>
-                <td>{p.product.price}</td>
-                <td>{p.product.brand}</td>
-                <td>{p.color}</td>
-                <td>{p.count}</td>
+                <td>{p?.product?.price}</td>
+                <td>{p?.product?.brand}</td>
+                <td>{p?.color}</td>
+                <td>{p?.count}</td>
                 <td>
-                  {p.product.shipping === "Yes" ? (
+                  {p?.product?.shipping === "Yes" ? (
                     <CheckCircleOutlined className="text-success" />
                   ) : (
                     <CloseCircleOutlined className="text-danger" />
@@ -77,17 +78,20 @@ const UserHistory = () => {
   // };
 
   const showEachOrders = () => {
-    return orders.reverse.map((order, i) => {
-      return (
-        <div key={i} className="m-5 p-3 card">
-          <ShowPaymentInfo order={order} />
-          {showOrderInTable(order)}
-          <div className="row">
-            {/* <div className="col">{showDownloadLink()}</div> */}
+    return (
+      orders.length > 1 &&
+      orders?.map((order, i) => {
+        return (
+          <div key={i} className="m-5 p-3 card">
+            <ShowPaymentInfo order={order} />
+            {showOrderInTable(order)}
+            <div className="row">
+              {/* <div className="col">{showDownloadLink()}</div> */}
+            </div>
           </div>
-        </div>
-      );
-    });
+        );
+      })
+    );
   };
 
   return (
@@ -98,14 +102,16 @@ const UserHistory = () => {
         </div>
 
         <div className="col-md-10">
-          {orders.length ? (
+          {orders?.length ? (
             <h4 className="text-center"> User Purchase Orders</h4>
           ) : (
             <h4 className="text-center"> No Purchase Orders</h4>
           )}
           <br />
           <hr />
-          {showEachOrders()}
+          {orders?.length > 1
+            ? showEachOrders()
+            : " there is no orders yet from you"}
         </div>
       </div>
     </div>

@@ -50,7 +50,9 @@ const StripeCheckout = () => {
     });
     if (payload.error) {
       setError(`payment failed ${payload.error.message} `);
+
       setProcessing(false);
+      history.push("/");
     } else {
       createOrder(user.token, payload).then((res) => {
         if (res.data.ok) {

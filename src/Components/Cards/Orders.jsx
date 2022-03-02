@@ -23,14 +23,14 @@ const Orders = ({ orders, handleStatusChange }) => {
               <tr key={i}>
                 <td>
                   {" "}
-                  <b>{p.product.title}</b>{" "}
+                  <b>{p?.product?.title}</b>{" "}
                 </td>
-                <td>{p.product.price}</td>
-                <td>{p.product.brand}</td>
-                <td>{p.color}</td>
-                <td>{p.count}</td>
+                <td>{p?.product?.price}</td>
+                <td>{p?.product?.brand}</td>
+                <td>{p?.color}</td>
+                <td>{p?.count}</td>
                 <td>
-                  {p.product.shipping === "Yes" ? (
+                  {p?.product?.shipping === "Yes" ? (
                     <CheckCircleOutlined className="text-success" />
                   ) : (
                     <CloseCircleOutlined className="text-danger" />
@@ -47,7 +47,7 @@ const Orders = ({ orders, handleStatusChange }) => {
     <div>
       {orders.map((order) => {
         return (
-          <div key={order._id} className="row pb-5">
+          <div key={order?._id} className="row pb-5">
             <div className="btn btn-light p-2">
               <ShowPaymentInfo order={order} showStatus={false} />
               <div className="row">
@@ -56,10 +56,10 @@ const Orders = ({ orders, handleStatusChange }) => {
                 <div className="col-md-2">
                   <select
                     onChange={(e) =>
-                      handleStatusChange(order._id, e.target.value)
+                      handleStatusChange(order?._id, e.target.value)
                     }
                     className="form-control bg bg-warning text-white"
-                    value={order.orderStatus}
+                    value={order?.orderStatus}
                     name="status"
                   >
                     <option value="Not Processed"> Not Processed</option>

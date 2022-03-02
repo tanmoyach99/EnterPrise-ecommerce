@@ -10,10 +10,12 @@ import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import CategoryForm from "../../../Components/Forms/CategoryForm";
+import ImageUpload from "../../../Components/Forms/ImageUpload";
 
 const CategoryUpdate = ({ match }) => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [value, setValue] = useState([]);
 
   const { user } = useSelector((state) => ({ ...state }));
   const { slug } = useParams();
@@ -31,7 +33,7 @@ const CategoryUpdate = ({ match }) => {
     e.preventDefault();
     setLoading(true);
 
-    updateCategory(slug, { name }, user.token)
+    updateCategory(slug, { name, images: value }, user.token)
       .then((res) => {
         toast.success(`${res.data.name} is updated`);
 
@@ -55,6 +57,8 @@ const CategoryUpdate = ({ match }) => {
         </div>
         <div className="col-md-10">
           <h4> Update CATEGORY</h4>
+          <ImageUpload values={value} setValues={setValue} />
+          <hr />
           <CategoryForm
             handleSubmit={handleSubmit}
             name={name}

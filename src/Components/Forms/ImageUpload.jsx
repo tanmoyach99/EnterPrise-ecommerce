@@ -9,7 +9,7 @@ const ImageUpload = ({ values, setValues }) => {
 
   const fileUploadResize = (e) => {
     let files = e.target.files;
-    let allUploadedFiles = values.images;
+    let allUploadedFiles = values.images || values;
     if (files) {
       for (let i = 0; i < files.length; i++) {
         const element = files[i];
@@ -29,6 +29,7 @@ const ImageUpload = ({ values, setValues }) => {
               )
               .then((res) => {
                 console.log(res);
+
                 allUploadedFiles.push(res.data);
                 setValues({ ...values, images: allUploadedFiles });
               })

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "antd";
-import laptop from "../../images/laptop.jpg";
+import laptop from "../../images/laptop";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons/lib/icons";
 import { Link } from "react-router-dom";
 

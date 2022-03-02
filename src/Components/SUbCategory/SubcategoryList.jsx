@@ -18,12 +18,11 @@ const SubCategoryList = () => {
       <div className="row">
         {subs?.length > 0 &&
           subs.map((s) => (
-            <div key={s._id} className="col-md-2">
-              <Link to={`/sub/${s.slug}`}>
-                <button className="btn btn-success m-1 text-white">
-                  {s.name}
-                </button>
+            <div key={s._id} className="fs-5">
+              <Link to={`/sub/${s.slug}`} className="text-dark">
+                {s.name}
               </Link>
+              <hr />
             </div>
           ))}
       </div>

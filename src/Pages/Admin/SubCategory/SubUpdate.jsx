@@ -35,6 +35,7 @@ const SubUpdate = () => {
 
   const loadSubs = () =>
     getSub(slug).then((s) => {
+      console.log(s.dat);
       setName(s.data.name);
       setParent(s.data.parent);
     });

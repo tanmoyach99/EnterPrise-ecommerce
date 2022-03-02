@@ -40,11 +40,14 @@ const Subcategory = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log(e.target.value, e);
+    console.log(category);
 
     createSub({ name, parent: category }, user.token)
       .then((res) => {
         toast.success(`${res.data.name} is created`);
         console.log(res);
+
         setLoading(false);
 
         setName("");
@@ -61,7 +64,7 @@ const Subcategory = () => {
       removeSub(slug, user.token)
         .then((res) => {
           loadSubs();
-          console.log(res);
+
           toast.success("successfully deleted");
         })
         .catch((err) => console.log(err));

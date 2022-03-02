@@ -7,21 +7,47 @@ const CategoryList = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getCategories().then((res) => setCategories(res.data));
+    getCategories().then((res) => {
+      setCategories(res.data);
+    });
   }, []);
+  console.log(categories);
 
-  //   const showCategories = () => {};
+  const styleChange = (e, name) => {
+    e.target.style.transform = "translateY(-5px)";
+  };
+
+  const styleChangeLeave = (e) => {
+    e.target.style.transform = "translateY(5px)";
+  };
+  function shuffle(array) {
+    array.sort(() => Math.random() - 0.5);
+  }
+  const sorted = shuffle(categories);
+  console.log(sorted);
 
   return (
-    <div className="container">
-      <div className="row">
+    <div>
+      <div className="row  d-flex  align-items-center justify-content-center ">
         {categories?.length > 0 &&
-          categories.map((c) => (
-            <div key={c._id} className="col-md-2">
+          categories.slice(0, 3).map((c) => (
+            <div
+              key={c._id}
+              className="col-md-3 category-content m-1 p-1 bg-white"
+              style={{ borderRadius: "5px" }}
+            >
+              {" "}
               <Link to={`/category/${c.slug}`}>
-                <button className="btn btn-success m-1 text-white">
-                  {c.name}
-                </button>
+                <h5>
+                  <span className="text-warning mb-1 p-1">{c.name}</span>
+                </h5>
+                <img
+                  onMouseOver={(e) => styleChange(e, c.name)}
+                  onMouseLeave={styleChangeLeave}
+                  src={c.images[0].images[0].url}
+                  alt=""
+                  className="cat-img img-fluid"
+                />
               </Link>
             </div>
           ))}
