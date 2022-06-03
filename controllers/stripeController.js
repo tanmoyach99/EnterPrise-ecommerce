@@ -3,7 +3,9 @@ const Cart = require("../models/cart");
 const Product = require("../models/product");
 const Coupon = require("../models/coupon");
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const stripe = require("stripe")(
+  "sk_test_51Iu0RzDVuG4dQji91qi6MgBR3yf2Ou3itdqb9JGSFlMfolbefNBL87rQwQKkd9scRErrT0guiY8zYCFbjCzCK1tV00jhnvxA2m"
+);
 
 exports.createPaymentIntent = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
@@ -22,6 +24,7 @@ exports.createPaymentIntent = async (req, res) => {
     amount: finalAmount,
     currency: "usd",
   });
+  console.log(paymentIntent);
   res.send({
     clientSecret: paymentIntent.client_secret,
     cartTotal: cart?.cartTotal,

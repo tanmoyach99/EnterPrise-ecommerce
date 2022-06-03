@@ -4,9 +4,10 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { readdirSync } = require("fs");
+const app = express();
+
 require("dotenv").config();
 
-const app = express();
 const port = process.env.PORT || 8000;
 app.get("/", (req, res) => {
   res.send("app is working");
@@ -15,10 +16,13 @@ app.get("/", (req, res) => {
 // const authRoutes = require("./routes/auth");
 
 mongoose
-  .connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://tanmoy990:tanmoy99@cluster0.v6ubf.mongodb.net/ecommerce-solution",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => console.log("db connected"))
   .catch((err) => console.log(`db connection err`, err));
 
@@ -39,4 +43,4 @@ readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
 //   });
 // });
 
-app.listen(port, () => console.log(`server is running on ${port}`));
+app.listen(8000, () => console.log(`server is running on all`));
