@@ -52,7 +52,7 @@ exports.userCart = async (req, res) => {
 
 exports.user = async (req, res) => {
   const userGet = await User.findOne({ email: req.user?.email }).exec();
-  console.log(userGet);
+  // console.log(userGet);
   res.json(userGet);
 };
 
