@@ -7,7 +7,9 @@ const { readdirSync } = require("fs");
 require("dotenv").config();
 const app = express();
 
-const port = 8000;
+console.log(process.env.port);
+
+const port=process.env.PORT|| 8000;
 // app.get("/", (req, res) => {
 //   res.send("app is working");
 // });
@@ -42,4 +44,4 @@ readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
 //   });
 // });
 
-app.listen(port, () => console.log(`server is running on all`));
+app.listen(process.env.PORT, () => console.log(`server is running on all`));
