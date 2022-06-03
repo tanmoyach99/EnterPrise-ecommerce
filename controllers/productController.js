@@ -3,7 +3,6 @@ const slugify = require("slugify");
 const User = require("../models/user");
 
 exports.create = async (req, res) => {
-  console.log(req.body);
   try {
     // console.log(req.body);
     req.body.slug = slugify(req.body.title);
@@ -166,13 +165,6 @@ exports.listRelated = async (req, res) => {
   console.log("related", related);
   res.json(related);
 };
-
-
-
-
-
-
-
 
 //search and filters
 

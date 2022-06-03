@@ -2,7 +2,7 @@ const express = require("express");
 
 const categoryRouter = express.Router();
 
-const { authCheck, adminCheck } = require("../middlewares/authMiddle");
+const { authCheck, adminCheck } = require("../middlewares/authmiddle");
 const {
   create,
   read,
@@ -16,6 +16,7 @@ categoryRouter.post("/category", authCheck, adminCheck, create);
 categoryRouter.get("/categories", list);
 categoryRouter.get("/category/:slug", read);
 categoryRouter.put("/category/:slug", authCheck, adminCheck, update);
+
 categoryRouter.get("/category/subs/:_id", getSubs);
 
 categoryRouter.delete("/category/:slug", authCheck, adminCheck, remove);

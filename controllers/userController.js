@@ -33,7 +33,6 @@ exports.userCart = async (req, res) => {
 
     products.push(object);
   }
-
   // console.log('products',products);
 
   let cartTotal = 0;
@@ -49,6 +48,12 @@ exports.userCart = async (req, res) => {
   }).save();
 
   res.json({ ok: true });
+};
+
+exports.user = async (req, res) => {
+  const userGet = await User.findOne({ email: req.user?.email }).exec();
+  console.log(userGet);
+  res.json(userGet);
 };
 
 exports.getUserCart = async (req, res) => {

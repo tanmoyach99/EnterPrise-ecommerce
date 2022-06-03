@@ -2,7 +2,7 @@ const express = require("express");
 
 const authRouter = express.Router();
 
-const { authCheck, adminCheck } = require("../middlewares/authMiddle");
+const { authCheck, adminCheck } = require("../middlewares/authmiddle");
 const {
   createOrUpdateUser,
   currentUser,

@@ -1,7 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
 
-const { authCheck } = require("../middlewares/authMiddle");
+const { authCheck } = require("../middlewares/authmiddle");
 
 const {
   userCart,
@@ -15,14 +15,17 @@ const {
   wishlist,
   wishlistUpdate,
   createCashOrder,
+  user,
 } = require("../controllers/userController");
 
 userRouter.post("/user/cart", authCheck, userCart);
 userRouter.post("/user/address", authCheck, userAddress);
 userRouter.post("/user/cart/coupon", authCheck, applyCoupon);
+// userRouter.post('/user/cart')
 userRouter.get("/user/cart", authCheck, getUserCart);
 userRouter.delete("/user/cart", authCheck, emptyCart);
 userRouter.get("/user/orders", authCheck, orders);
+userRouter.get("/user/user", authCheck, user);
 
 //
 userRouter.post("/user/order", authCheck, createOrder);

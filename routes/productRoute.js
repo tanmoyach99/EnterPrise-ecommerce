@@ -2,7 +2,7 @@ const express = require("express");
 
 const productRouter = express.Router();
 
-const { authCheck, adminCheck } = require("../middlewares/authMiddle");
+const { authCheck, adminCheck } = require("../middlewares/authmiddle");
 const {
   create,
   listAll,
