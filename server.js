@@ -4,11 +4,10 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { readdirSync } = require("fs");
+require("dotenv").config();
 const app = express();
 
-require("dotenv").config();
-
-// const port = process.env.PORT || 8000;
+const port = 8000;
 // app.get("/", (req, res) => {
 //   res.send("app is working");
 // });
@@ -43,4 +42,4 @@ readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
 //   });
 // });
 
-app.listen(8000, () => console.log(`server is running on all`));
+app.listen(port, () => console.log(`server is running on all`));
