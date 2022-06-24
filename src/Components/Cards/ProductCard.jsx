@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { Card, Tooltip } from "antd";
 import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
-
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import laptop from "../../images/laptop";
 import { Link, useParams } from "react-router-dom";
-
 import { showAverage } from "../../helperFunctions/ratings";
 
 const ProductCard = ({ product }) => {
@@ -42,16 +40,17 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="col-md-4 mb-1 single-card ">
+    <div className=" product col-md-4 mb-1 single-card ">
       <Card
         cover={
           <img
             src={images && images.length ? images[0].url : laptop}
             alt=""
             style={{
-              width: "20vw",
+              width: "100%",
               height: "30vh",
               objectFit: "cover",
+              display: "inline",
             }}
             className="p-1 text-center img-fluid card-img"
           />

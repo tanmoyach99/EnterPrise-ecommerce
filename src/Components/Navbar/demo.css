@@ -1,19 +1,21 @@
 .header-mega{
-    background: #122331;
+    /* background: #ebe7e7; */
     position:relative;
-    max-width:80vw;
+    max-width:100vw;
     margin:auto;
-    padding: rem 0rem;
+    padding: 0.2rem 0.2rem;
     Z-index:1;
-    display:flex;align-items:center;
-    justify-content:center;
+    display:flex;
+ 
 
 }
 .header-mega a{
     text-decoration:None;
-color:white
+color: dimgray
 }
-.header-mega li{list-style:none}
+.header-mega li{
+    list-style:none
+}
 .logo{
     font-size: 2rem;
 }
@@ -35,11 +37,12 @@ color:white
 }
 .dropdown-menu-mega{
     position:absolute;
-    background:#122331;
+    background: #FFFFFF;
     width:100%;
     opacity:0;
     top: 50px;
     left: 0;
+    padding:20px;
     visibility:hidden;
 
 
@@ -53,21 +56,21 @@ color:white
 .dropdown:hover .dropdown-menu-mega{
     top: 34px;
     opacity: 1;
-    visibility:visible
+    visibility:visible;
+    width:300%
 
 }
 .mega-menu{
     position:absolute;
     left:0;
-    width:80vw;
-  
+    width:70vw;
     top:80px;
     opacity:0;
     visibility:hidden;
     transition: all O.3s ease;
 }
 .mega-menu .content{
-    background:#122331;
+    background:#FFFFFF;
     padding: 1rem;
     display:grid;
     grid-template-columns: repeat(4,1fr);
@@ -97,3 +100,53 @@ color:white
 }
 
 
+/* new setup */
+.menu-btn{
+    position:relative;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    z-index: 2;
+}
+.menu-btn__lines::before,.menu-btn__lines::after{
+    content:'';
+    position:absolute;
+}
+.menu-btn__lines::after,.menu-btn__lines::before,.menu-btn__lines{
+    width: 1.5rem;
+    height: 0.1rem;
+    background:#ffffff;
+    transition: all 0.5s ease-in-out;
+}
+
+/* media queries */
+@media screen and (max-width:970px){
+    /* .menu-btn{
+        display:flex;
+    }
+    .header .menu-items {
+        position:absolute;
+        height: calc(100vh-100);
+        width: 100%;
+        max-width:350px;
+        top: 100%;
+        right: 0;
+        background:#122331;
+        display:block;
+        padding: 1rem;
+        line-height:3rem;overflow-y:auto;opacity: 0;
+        transform: translateY(-10vh);
+        z-index:-1;
+    }
+    .menu-items .open{
+        opacity: 1;
+        transform: translateY(0)
+
+    } */
+    .master-mega{
+        display:none
+    }
+}

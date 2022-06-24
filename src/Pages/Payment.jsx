@@ -5,7 +5,7 @@ import StripeCheckout from "../Components/StripeCheckout";
 import "../stripe.css";
 
 const promise = loadStripe(
-  "  pk_test_51Iu0RzDVuG4dQji9ReyfG4EDP7X25Gcle68AKSOjVj8KHr9z4sxuNS4vbQ5I8X0745t34rNaiFaRz4faPlSm5oT500LkCQckJe"
+  "pk_test_51Iu0RzDVuG4dQji9ReyfG4EDP7X25Gcle68AKSOjVj8KHr9z4sxuNS4vbQ5I8X0745t34rNaiFaRz4faPlSm5oT500LkCQckJe"
 );
 // pk_test_51Iu0RzDVuG4dQji9ReyfG4EDP7X25Gcle68AKSOjVj8KHr9z4sxuNS4vbQ5I8X0745t34rNaiFaRz4faPlSm5oT500LkCQckJe
 

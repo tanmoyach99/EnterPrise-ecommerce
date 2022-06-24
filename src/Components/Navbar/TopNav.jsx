@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 const TopNav = () => {
   return (
-    <>
-      <Navbar className="d-flex justify-content-around ">
+    <div className="top-top">
+      <Navbar className="d-flex justify-content-around  ">
         <div className="d-flex top-nav">
           <span className="ms-5 me-3 border-end-0">
             {" "}
@@ -27,13 +27,13 @@ const TopNav = () => {
         </div>
         <div>
           <span className="text-Secondary">
-            <PhoneOutlined className="text-info me-1 fw-bolder fs-4" />
+            <PhoneOutlined className="text-secondary me-1 fw-bolder fs-5 " />
             Need help call us{" "}
-            <span className="text-info"> +990-010-001-01</span>
+            <span className="text-secondary"> +990-010-001-01</span>
           </span>
         </div>
       </Navbar>
-    </>
+    </div>
   );
 };
 

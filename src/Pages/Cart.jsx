@@ -9,6 +9,8 @@ const Cart = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { cart, user } = useSelector((state) => ({ ...state }));
+  console.log("reducer cart", cart);
+  console.log(cart);
   const getTotal = () => {
     return cart.reduce((currentValue, nextValue) => {
       return currentValue + nextValue.count * nextValue.price;
@@ -19,6 +21,7 @@ const Cart = () => {
     userCart(cart, user.token)
       .then((res) => {
         console.log("CART REQ RES", res);
+        console.log(res.data);
         if (res.data.ok) history.push("/user/checkout");
       })
       .catch((err) => console.log(err));
@@ -51,7 +54,7 @@ const Cart = () => {
             <th scope="col">Remove</th>
           </tr>
         </thead>
-        {cart.map((p) => (
+        {cart?.map((p) => (
           <ProductCheckout product={p} key={p._id} />
         ))}
       </table>
@@ -64,7 +67,7 @@ const Cart = () => {
         <h4>Cart -{cart.length} items .</h4>
       </div>
       <div className="row">
-        <div className="col-md-8">
+        <div style={{ overflow: "hidden" }} className="col-md-6 ">
           {!cart.length ? (
             <h4>
               {" "}
@@ -75,11 +78,11 @@ const Cart = () => {
             showCartItems()
           )}
         </div>
-        <div className="col-md-4">
+        <div className="offset-md-1 col-md-2 col-sm-8 col-lg-4 col-xl-5">
           <h4>Order summary</h4>
           <hr />
           <p>Products</p>
-          {cart.map((c, i) => (
+          {cart?.map((c, i) => (
             <div key={i}>
               <p>
                 {" "}

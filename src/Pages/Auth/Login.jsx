@@ -11,22 +11,29 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { firebaseConfig } from "../../firebase";
 import { Button } from "antd";
-import axios from "axios";
+
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
-import { createOrUpdateUser } from "../../helperFunctions/createOrUpdate";
+import {
+  createOrUpdateUser,
+  currentUser,
+} from "../../helperFunctions/createOrUpdate";
+import { getUser, getWishList, getUserCart } from "../../helperFunctions/user";
 
 initializeApp(firebaseConfig);
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [users, setUsers] = useState([]);
 
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, wishlist } = useSelector((state) => ({ ...state }));
   const [email, setEmail] = useState("");
+  const [wish, setWish] = useState([]);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(true);
+  const [u, setU] = useState({});
 
   useEffect(() => {
     let intended = history.location.state;
@@ -73,6 +80,24 @@ const Login = () => {
               _id: res.data._id,
             },
           });
+          getWishList(idTokenResult?.token).then((res) => {
+            console.log(res.data);
+            setWish(res.data.wishlist);
+            dispatch({
+              type: "GET_WISHLIST",
+              payload: res.data.wishlist,
+            });
+            localStorage.setItem("user", JSON.stringify(res.data));
+          });
+          // getUserCart(idTokenResult?.token).then((res) => {
+          //   console.log(res.data);
+          //   dispatch({
+          //     type: "GET_CART",
+          //     payload: res.data,
+          //   });
+          //   localStorage.setItem("cart", JSON.stringify(res.data));
+          // });
+
           roleBasedRedirect(res);
         })
         .catch((err) => console.log(err, "err happened"));
@@ -104,8 +129,28 @@ const Login = () => {
                 _id: res.data._id,
               },
             });
+            getWishList(idTokenResult?.token).then((res) => {
+              console.log(res.data);
+              setWish(res.data.wishlist);
+              dispatch({
+                type: "GET_WISHLIST",
+                payload: res.data.wishlist,
+              });
+              localStorage.setItem("user", JSON.stringify(res.data));
+            });
+
+            // getUserCart(idTokenResult?.token).then((res) => {
+            //   console.log(res.data);
+            //   dispatch({
+            //     type: "GET_CART",
+            //     payload: res.data,
+            //   });
+            //   localStorage.setItem("cart", JSON.stringify(res.data));
+            // });
+            // localStorage.setItem("user", JSON.stringify(wish));
+
             // window.localStorage.setItem("id", res.data._id);
-            roleBasedRedirect(res);
+            // roleBasedRedirect(res);
           })
           .catch((err) => console.log(err, "err happened"));
       })

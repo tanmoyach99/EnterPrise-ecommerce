@@ -39,13 +39,17 @@ const FeaturedProduct = () => {
                 <h6 className="text-warning text-center">
                   <span> $ {p.price}</span>
                 </h6>
+               <Link to={`/product/${p.slug}`}>
                 <button
-                  className="btn btn-warning"
-                  onClick={() => history.push(`/product/${p.slug}`)}
+                  className="btn btn-warning btn-featured"
+                
                 >
-                  {" "}
-                  Explore{" "}
+                  Explore
                 </button>
+               
+               </Link>
+                  
+                 
               </div>
             </div>
           </div>

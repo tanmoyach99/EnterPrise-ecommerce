@@ -4,22 +4,50 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getProductsByCount } from "../../helperFunctions/productCRUD";
 import { showAverage } from "../../helperFunctions/ratings";
+
 import {
   EyeOutlined,
   HeartOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "antd";
 import _ from "lodash";
+import {
+  addToWishList,
+  getUserCart,
+  getWishList,
+} from "../../helperFunctions/user";
+import { useHistory } from "react-router-dom";
 
 const SliderProductCard = () => {
   const [products, setProducts] = useState([]);
-
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => ({ ...state }));
+  const history = useHistory();
+  const [wishlist, setWishlist] = useState([]);
+
   useEffect(() => {
     getProductsByCount(10).then((res) => setProducts(res.data));
   }, []);
+
+  const loadWishlist = () => {
+    getWishList(user?.token).then((res) => {
+      setWishlist(res.data.wishlist);
+    });
+  };
+  // const getCart = () => {
+  //   getUserCart(user?.token).then((res) => {
+  //     console.log(res.data);
+  //   });
+  // };
+  useEffect(() => {
+    loadWishlist();
+  }, []);
+  // useEffect(() => {
+  //   getCart();
+  // }, []);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -41,9 +69,7 @@ const SliderProductCard = () => {
         count: 1,
       });
       let unique = _.uniqWith(cart, _.isEqual); //lodash method
-
       localStorage.setItem("cart", JSON.stringify(unique));
-
       dispatch({
         type: "ADD_TO_CART",
         payload: unique,
@@ -53,6 +79,20 @@ const SliderProductCard = () => {
         payload: true,
       });
     }
+  };
+
+  const handleAddToWishList = (pd) => {
+    let list = wishlist;
+    addToWishList(pd._id, user.token).then((res) => {
+      list.push(...wishlist, pd);
+      let unique = _.uniqWith(list, _.isEqual);
+
+      dispatch({
+        type: "ADD_TO_WISHLIST",
+        payload: unique,
+      });
+      setWishlist(unique);
+    });
   };
 
   return (
@@ -93,8 +133,14 @@ const SliderProductCard = () => {
                 <br />
                 <div className="add-cart-fnc">
                   <div className="d-flex align-items-center justify-content-center container">
-                    <HeartOutlined className="m-2 p-2 fs-5" />{" "}
-                    <EyeOutlined className="m-2 p-2 fs-5" />
+                    <HeartOutlined
+                      className="m-2 p-2 fs-5"
+                      onClick={() => handleAddToWishList(p)}
+                    />{" "}
+                    <EyeOutlined
+                      className="m-2 p-2 fs-5"
+                      onClick={() => history.push(`/product/${p.slug}`)}
+                    />
                   </div>
 
                   <button

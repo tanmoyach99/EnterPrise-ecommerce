@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Tabs, Tooltip } from "antd";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -11,8 +11,7 @@ import RatingModal from "../modal/RatingModal";
 import { showAverage } from "../../helperFunctions/ratings";
 import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
-import { addToWishList } from "../../helperFunctions/user";
-import { toast } from "react-toastify";
+import { addToWishList, getWishList } from "../../helperFunctions/user";
 
 const SingleProduct = ({ product, onStarClick, star }) => {
   const { TabPane } = Tabs;
@@ -20,23 +19,28 @@ const SingleProduct = ({ product, onStarClick, star }) => {
   const { user, cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
 
-  const {
-    brand,
-    category,
-    _id,
-    price,
-    images,
-    description,
-    title,
-    quantity,
-    slug,
-  } = product;
-
-  const handleAddToWishList = () => {
-    // e.preventDefault();
-    addToWishList(_id, user.token).then((res) => {
+  const [wishlist, setWishlist] = useState([]);
+  useEffect(() => {
+    getWishList(user.token).then((res) => {
       console.log(res.data);
-      toast.success("your product has been added to your wishlist");
+      setWishlist(res.data.wishlist);
+    });
+  }, []);
+  console.log(wishlist);
+
+  const { _id, images, description, title } = product;
+
+  const handleAddToWishList = (pd) => {
+    let list = wishlist;
+    addToWishList(pd._id, user.token).then((res) => {
+      list.push(...wishlist, pd);
+      let unique = _.uniqWith(list, _.isEqual);
+
+      dispatch({
+        type: "ADD_TO_WISHLIST",
+        payload: unique,
+      });
+      setWishlist(unique);
     });
   };
 
@@ -135,7 +139,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
               </span>
             </Tooltip>,
 
-            <span onClick={handleAddToWishList}>
+            <span onClick={() => handleAddToWishList(product)}>
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </span>,
             <RatingModal>

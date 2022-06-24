@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import UserDashboardNav from "../../Components/Navbar/UserDashboardNav";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getWishList, updateWishlist } from "../../helperFunctions/user";
 import { Link } from "react-router-dom";
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
   const { user } = useSelector((state) => ({ ...state }));
+  const dispatch = useDispatch();
 
   const loadWishlist = () =>
     getWishList(user.token).then((res) => {
-      console.log(res.data);
       setWishlist(res.data.wishlist);
     });
   useEffect(() => {
@@ -19,10 +19,21 @@ const Wishlist = () => {
 
   const handleRemove = (productId) => {
     updateWishlist(productId, user.token).then((res) => {
+      wishlist.map((p, i) => {
+        if (p._id === productId) {
+          return wishlist.splice(i, 1);
+        }
+      });
+      localStorage.setItem("wishlist", JSON.stringify(res.data.wishlist));
+
+      dispatch({
+        type: "REMOVE_FROM_WISHLIST",
+        payload: wishlist,
+      });
       loadWishlist();
-      console.log("wishlist has been removed", res);
     });
   };
+
   return (
     <div className="container-fluid">
       <div className="row d-flex ">

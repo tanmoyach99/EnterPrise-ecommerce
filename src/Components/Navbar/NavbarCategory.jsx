@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { getCategories } from "../../helperFunctions/categoryCRUD";
 import { Dropdown } from "react-bootstrap";
 

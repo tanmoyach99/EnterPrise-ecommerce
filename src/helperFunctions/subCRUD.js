@@ -1,16 +1,20 @@
 import axios from "axios";
 
 export const getSubs = async () => {
-  return await axios.get("http://localhost:8000/api/subCategories ");
+  return await axios.get(
+    "https://stormy-eyrie-52203.herokuapp.com/api/subCategories "
+  );
 };
 
 export const getSub = async (slug) => {
-  return await axios.get(`http://localhost:8000/api/subCategory/${slug}`);
+  return await axios.get(
+    `https://stormy-eyrie-52203.herokuapp.com/api/subCategory/${slug}`
+  );
 };
 
 export const removeSub = async (slug, authtoken) => {
   return await axios.delete(
-    `http://localhost:8000/api/subCategory/${slug}`,
+    `https://stormy-eyrie-52203.herokuapp.com/api/subCategory/${slug}`,
 
     { headers: { authtoken } }
   );
@@ -18,7 +22,7 @@ export const removeSub = async (slug, authtoken) => {
 
 export const updateSub = async (slug, subCategory, authtoken) => {
   return await axios.put(
-    `http://localhost:8000/api/subCategory/${slug}`,
+    `https://stormy-eyrie-52203.herokuapp.com/api/subCategory/${slug}`,
     subCategory,
 
     { headers: { authtoken } }
@@ -27,7 +31,7 @@ export const updateSub = async (slug, subCategory, authtoken) => {
 
 export const createSub = async (subCategory, authtoken) => {
   return await axios.post(
-    `http://localhost:8000/api/subCategory`,
+    `https://stormy-eyrie-52203.herokuapp.com/api/subCategory`,
     subCategory,
 
     { headers: { authtoken } }

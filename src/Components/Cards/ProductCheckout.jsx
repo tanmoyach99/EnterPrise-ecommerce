@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ModalImage from "react-modal-image";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CloseOutlined } from "@ant-design/icons";
+import { getUserCart } from "../../helperFunctions/user";
 
 const ProductCheckout = ({ product }) => {
   const { title, _id, images, brand, color, count, shipping, price, quantity } =
@@ -81,14 +82,14 @@ const ProductCheckout = ({ product }) => {
       <tr>
         <td>
           <div style={{ width: "100px", objectFit: "cover" }}>
-            {images.length ? (
+            {images?.length ? (
               <ModalImage small={images[0].url} large={images[0].url} />
             ) : (
               "images"
             )}
           </div>
         </td>
-        <td>{title.substring(0, 15)}</td> <td>{price}</td>
+        <td>{title?.substring(0, 15)}</td> <td>{price}</td>
         <td> {brand} </td>
         <td className="text-center">
           <select

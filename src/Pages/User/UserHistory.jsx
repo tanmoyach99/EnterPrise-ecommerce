@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserDashboardNav from "../../Components/Navbar/UserDashboardNav";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { getUserOrders } from "../../helperFunctions/user";
 import ShowPaymentInfo from "../../Components/Cards/ShowPaymentInfo";
@@ -17,12 +17,14 @@ import ShowPaymentInfo from "../../Components/Cards/ShowPaymentInfo";
 const UserHistory = () => {
   const [orders, setOrders] = useState([]);
   const { user } = useSelector((state) => ({ ...state }));
+  console.log(user, user.token);
 
   useEffect(() => {
     getUserOrders(user.token).then((res) => {
+      console.log(res.data);
       setOrders(res.data);
     });
-  }, [user.token]);
+  }, [user]);
   console.log(orders);
 
   const showOrderInTable = (order) => {
@@ -79,7 +81,7 @@ const UserHistory = () => {
 
   const showEachOrders = () => {
     return (
-      orders.length > 1 &&
+      orders.length > 0 &&
       orders?.map((order, i) => {
         return (
           <div key={i} className="m-5 p-3 card">
@@ -109,7 +111,7 @@ const UserHistory = () => {
           )}
           <br />
           <hr />
-          {orders?.length > 1
+          {orders?.length > 0
             ? showEachOrders()
             : " there is no orders yet from you"}
         </div>

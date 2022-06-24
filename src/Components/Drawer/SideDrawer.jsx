@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const SideDrawer = ({ children }) => {
   const dispatch = useDispatch();
   const { drawer, cart } = useSelector((state) => ({ ...state }));
+  console.log(cart);
   return (
     <Drawer
       className="text-center"
@@ -20,7 +21,7 @@ const SideDrawer = ({ children }) => {
       }}
       visible={drawer}
     >
-      {cart.map((c) => (
+      {cart?.map((c) => (
         <div className="row" key={c._id}>
           <div className="col">
             {c.images ? (

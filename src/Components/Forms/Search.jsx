@@ -1,16 +1,15 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { SearchOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Link, useHistory } from "react-router-dom";
-import { Badge, Input } from "antd";
+import { Badge } from "antd";
 
 const SearchInput = () => {
-  const { Search } = Input;
   let dispatch = useDispatch();
-  let { search, cart } = useSelector((state) => ({ ...state }));
-  let { text } = search;
-
+  let { search, cart, user, wishlist } = useSelector((state) => ({ ...state }));
+  console.log(cart);
   const history = useHistory();
+  let { text } = search;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,25 +25,45 @@ const SearchInput = () => {
 
   return (
     <div className=" d-flex justify-content-center align-items-center">
-      <div className="text-center">
-        <Search
-          style={{ width: "30vw" }}
-          placeholder="input search "
+      <div
+        className="text-center d-flex justify-content-center align-items-center"
+        style={{ borderRadius: "5px" }}
+      >
+        <input
+          style={{
+            width: "30vw",
+            height: "6vh",
+            border: "none",
+            margin: "0",
+            // padding: "2px",
+          }}
+          placeholder="   Search Your Desired Products "
           onChange={handleChange}
           className=" bg-light"
-          enterButton={
-            <SearchOutlined
-              onClick={handleSubmit}
-              className=" p-2 fs-6"
-              style={{ cursor: "pointer" }}
-            />
-          }
         />
+        <button className="btn btn-info p-2" onClick={handleSubmit}>
+          {" "}
+          Search
+        </button>
       </div>
       <div className="ms-5">
         <Link to="/cart">
-          <Badge className="text-success" count={cart.length} offset={[9, 0]}>
-            <ShoppingCartOutlined className="text-info fs-2" />
+          <Badge
+            className="text-success"
+            count={user && cart?.length}
+            offset={[9, 0]}
+          >
+            <ShoppingCartOutlined className=" fs-2" />
+          </Badge>
+        </Link>
+
+        <Link to="/user/wishlist">
+          <Badge
+            className="text-success m-4 fs-2"
+            count={user && wishlist.length ? wishlist.length : 0}
+            offset={[9, 0]}
+          >
+            <HeartOutlined />
           </Badge>
         </Link>
       </div>

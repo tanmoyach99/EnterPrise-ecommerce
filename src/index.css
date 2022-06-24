@@ -3,13 +3,16 @@ body{
   margin:0;
   padding:0;
   box-sizing: border-box;
+  overflow-x: hidden;
+ 
 }
 
 
 
 .top-nav a{
   text-decoration:none;
-  color: darkgray;
+  color:dimgrey
+
 
 }
 .top-nav a:hover{
@@ -17,8 +20,6 @@ body{
 }
 .navbar-2 a{
   color: black;
-  
- 
 }
 .header{
   display:flex;
@@ -29,12 +30,9 @@ body{
   flex: 4;
 }
 .nav-img{
-  width:15vw;
-  margin-top: -2vh
-
-
+  width:12vw;
 }
-.nav-category{
+/* .nav-category{
   flex:1;
   margin-left:3rem;
   width:2rem;
@@ -44,11 +42,10 @@ body{
 .dropdown-category{
   width: 14vw;
   height:5vh;
-
   padding: 10px;
   border:1px solid goldenrod;
   
-}
+} */
 
 
 .slider {
@@ -158,6 +155,9 @@ body{
  list-style: none;
 
 }
+.footer-2{
+  display:none
+}
 
 /* .img-banner-2 {
   border-radius: 10px;
@@ -171,6 +171,12 @@ body{
 /* Extra small devices (phones, 600px and down) */
 
  @media only screen and (max-width: 600px) {
+     .master-mega {
+       display: none
+     }
+      .top-top{
+        display: none
+      }
    .slider-1 {
      top: 2vh;
      position: absolute;
@@ -188,6 +194,7 @@ body{
      width: 6rem;
      font-size: 0.5rem;
    }
+   
 
   
    .slider-3 {
@@ -270,6 +277,10 @@ body{
       justify-content:center !important;
       
     }
+    .footer{
+      display:none
+    }
+    /* .footer-2{display:block} */
 
   
 }
@@ -277,6 +288,20 @@ body{
 
 
 @media only screen and (max-width: 768px) {
+  
+    .footer {
+      display: none
+    }
+
+    /* .footer-2 {
+      display: block
+    } */
+    .master-mega {
+      display: none
+    }
+    .top-top{
+      display:none
+    }
   .footer-menu {
     display: flex !important;
     flex-direction: column !important;
@@ -367,7 +392,23 @@ body{
 } 
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
+@media only screen and (max-width: 992px) {  
+   .footer {
+     display: none
+   }
+
+   /* .footer-2 {
+      display: block
+    } */
+   .master-mega {
+     display: none
+   }
+
+   .top-top {
+     display: none
+   }
+  
+  
    .slider-1 {
      top: 20vh;
      position: absolute;
@@ -430,6 +471,10 @@ body{
      width: 15rem;
      font-size: 2rem;
    }
+    
+    .btn-featured{
+      display:none !important;
+    }
 
 }
 
