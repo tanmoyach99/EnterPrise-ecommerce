@@ -1,46 +1,42 @@
 import { useDispatch } from "react-redux";
 import { getAuth, getIdTokenResult, onAuthStateChanged } from "firebase/auth";
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect} from "react";
 import { Switch, Route } from "react-router-dom";
 import { currentUser } from "./helperFunctions/createOrUpdate";
 import "./App.css";
 import { firebaseConfig } from "./firebase";
 import { initializeApp } from "firebase/app";
-const Home = lazy(() => import("./Pages/Home"));
-const Login = lazy(() => import("./Pages/Auth/Login"));
-const Register = lazy(() => import("./Pages/Auth/Register"));
-const RegisterComplete = lazy(() => import("./Pages/Auth/RegisterComplete"));
+import Home from "./Pages/Home";
+import Login from "./Pages/Auth/Login";
+import Register from "./Pages/Auth/Register";
+import RegisterComplete from "./Pages/Auth/RegisterComplete";
 
-const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"));
+import ForgotPassword from "./Pages/Auth/ForgotPassword";
 
-const UserHistory = lazy(() => import("./Pages/User/UserHistory"));
-const UserRoutes = lazy(() => import("./Components/Routes/UserRoutes"));
-const Password = lazy(() => import("./Pages/User/Password"));
-const Wishlist = lazy(() => import("./Pages/User/Wishlist"));
-const AdminRoutes = lazy(() => import("./Components/Routes/AdminRoutes"));
-const Dashboard = lazy(() => import("./Pages/Admin/Dashboard"));
-const CategoryCreate = lazy(() =>
-  import("./Pages/Admin/Category/CategoryCreate")
-);
-const CategoryUpdate = lazy(() =>
-  import("./Pages/Admin/Category/CategoryUpdate")
-);
-const Subcategory = lazy(() => import("./Pages/Admin/SubCategory/Subcategory"));
-const SubUpdate = lazy(() => import("./Pages/Admin/SubCategory/SubUpdate"));
-const ProductCreate = lazy(() => import("./Pages/Admin/Product/ProductCreate"));
-const AllProducts = lazy(() => import("./Pages/Admin/Product/AllProducts"));
-const ProductUpdate = lazy(() => import("./Pages/Admin/Product/ProductUpdate"));
-const Product = lazy(() => import("./Pages/Product"));
-const Category = lazy(() => import("./Pages/Category"));
-const SubCategory = lazy(() => import("./Pages/SubCategory"));
-const Shop = lazy(() => import("./Pages/Shop"));
-const Cart = lazy(() => import("./Pages/Cart"));
-const SideDrawer = lazy(() => import("./Components/Drawer/SideDrawer"));
-const Checkout = lazy(() => import("./Pages/Checkout"));
-const CreateCoupon = lazy(() => import("./Pages/Admin/Coupons/CreateCoupon"));
-const Payment = lazy(() => import("./Pages/Payment"));
-const HomeNavbar = lazy(() => import("./Components/Navbar/HomeNavbar"));
-const Footer = lazy(() => import("./Components/Home/Footer"));
+import UserHistory from "./Pages/User/UserHistory";
+import UserRoutes from "./Components/Routes/UserRoutes";
+import Password from "./Pages/User/Password";
+import Wishlist from "./Pages/User/Wishlist";
+import AdminRoutes from "./Components/Routes/AdminRoutes";
+import Dashboard from "./Pages/Admin/Dashboard";
+import CategoryCreate from "./Pages/Admin/Category/CategoryCreate";
+import CategoryUpdate from "./Pages/Admin/Category/CategoryUpdate";
+import Subcategory from "./Pages/Admin/SubCategory/Subcategory";
+import SubUpdate from "./Pages/Admin/SubCategory/SubUpdate";
+import ProductCreate from "./Pages/Admin/Product/ProductCreate";
+import AllProducts from "./Pages/Admin/Product/AllProducts";
+import ProductUpdate from "./Pages/Admin/Product/ProductUpdate";
+import Product from "./Pages/Product";
+import Category from "./Pages/Category";
+import SubCategory from "./Pages/SubCategory";
+import Shop from "./Pages/Shop";
+import Cart from "./Pages/Cart";
+import SideDrawer from "./Components/Drawer/SideDrawer";
+import Checkout from "./Pages/Checkout";
+import CreateCoupon from "./Pages/Admin/Coupons/CreateCoupon";
+import Payment from "./Pages/Payment";
+import HomeNavbar from "./Components/Navbar/HomeNavbar";
+import Footer from "./Components/Home/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,12 +68,7 @@ function App() {
     return () => unSubscribe();
   }, []);
   return (
-    <Suspense
-      fallback={
-        <div>
-          <p>Loading</p>
-        </div>
-      }
+    <
     >
       <HomeNavbar />
       <SideDrawer />
@@ -158,7 +149,7 @@ function App() {
         </AdminRoutes>
       </Switch>
       <Footer />
-    </Suspense>
+    </>
   );
 }
 
