@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Tabs, Tooltip } from "antd";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import laptop from "../../images/laptop";
@@ -11,35 +11,24 @@ import RatingModal from "../modal/RatingModal";
 import { showAverage } from "../../helperFunctions/ratings";
 import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
-import { addToWishList, getWishList } from "../../helperFunctions/user";
+import { addToWishList } from "../../helperFunctions/user";
 
 const SingleProduct = ({ product, onStarClick, star }) => {
   const { TabPane } = Tabs;
   const [toolTip, setToolTip] = useState("click to add");
-  const { user, cart } = useSelector((state) => ({ ...state }));
+  const { user } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
+ 
 
   const [wishlist, setWishlist] = useState([]);
-  useEffect(() => {
-    getWishList(user.token).then((res) => {
-      console.log(res.data);
-      setWishlist(res.data.wishlist);
-    });
-  }, []);
-  console.log(wishlist);
+
 
   const { _id, images, description, title } = product;
-
   const handleAddToWishList = (pd) => {
-    let list = wishlist;
     addToWishList(pd._id, user.token).then((res) => {
-      list.push(...wishlist, pd);
-      let unique = _.uniqWith(list, _.isEqual);
-
-      dispatch({
-        type: "ADD_TO_WISHLIST",
-        payload: unique,
-      });
+      wishlist.push(...wishlist, pd);
+      let unique = _.uniqWith(wishlist, _.isEqual);
+  
       setWishlist(unique);
     });
   };
@@ -139,10 +128,20 @@ const SingleProduct = ({ product, onStarClick, star }) => {
               </span>
             </Tooltip>,
 
-            <span onClick={() => handleAddToWishList(product)}>
+
+
+            <Tooltip title={user? toolTip : "login to add in your wishlist"}>
+
+        {user ?     <span onClick={() => handleAddToWishList(product)}>
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
-            </span>,
+            </span> :     <Link to="/login">
+              <HeartOutlined className="text-info" /> <br /> Add to Wishlist
+            </Link>}
+            </Tooltip>,
+
+             
             <RatingModal>
+           
               <StarRating
                 name={_id}
                 numberOfStars={5}
@@ -151,7 +150,8 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                 isSelectable={true}
                 starRatedColor="red"
               />
-            </RatingModal>,
+            </RatingModal>
+            ,
           ]}
         >
           <ProductListItem product={product} />

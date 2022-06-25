@@ -108,7 +108,7 @@ const MainNavbar = () => {
                 <div className="content">
                   {categoryWithSubs.map((c) => {
                     return (
-                      <div className="col">
+                      <div key={c._id} className="col">
                         <section>
                           <h2 className=" text-center">{c.name}</h2>
                           <ul className="mega-links">

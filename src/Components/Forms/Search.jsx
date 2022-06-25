@@ -1,13 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import {ShoppingCartOutlined,HeartOutlined } from "@ant-design/icons";
 import { Link, useHistory } from "react-router-dom";
 import { Badge } from "antd";
 
 const SearchInput = () => {
   let dispatch = useDispatch();
-  let { search, cart, user, wishlist } = useSelector((state) => ({ ...state }));
-  console.log(cart);
+  let { search, cart, user } = useSelector((state) => ({ ...state }));
+ 
+  
   const history = useHistory();
   let { text } = search;
 
@@ -15,6 +16,7 @@ const SearchInput = () => {
     e.preventDefault();
     history.push(`/shop?${text}`);
   };
+
 
   const handleChange = (e) => {
     dispatch({
@@ -56,16 +58,16 @@ const SearchInput = () => {
             <ShoppingCartOutlined className=" fs-2" />
           </Badge>
         </Link>
-
+{user &&
         <Link to="/user/wishlist">
           <Badge
             className="text-success m-4 fs-2"
-            count={user && wishlist.length ? wishlist.length : 0}
             offset={[9, 0]}
+          
           >
             <HeartOutlined />
           </Badge>
-        </Link>
+        </Link>}
       </div>
     </div>
   );

@@ -8,44 +8,37 @@ import { showAverage } from "../../helperFunctions/ratings";
 import {
   EyeOutlined,
   HeartOutlined,
-  ShoppingCartOutlined,
+
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "antd";
 import _ from "lodash";
 import {
   addToWishList,
-  getUserCart,
-  getWishList,
+
 } from "../../helperFunctions/user";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const SliderProductCard = () => {
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
   const history = useHistory();
-  const [wishlist, setWishlist] = useState([]);
+   const [wishlist, setWishlist] = useState([]);
+    const [toolTip, setToolTip] = useState("click to add");
 
   useEffect(() => {
     getProductsByCount(10).then((res) => setProducts(res.data));
   }, []);
 
-  const loadWishlist = () => {
-    getWishList(user?.token).then((res) => {
-      setWishlist(res.data.wishlist);
-    });
-  };
-  // const getCart = () => {
-  //   getUserCart(user?.token).then((res) => {
-  //     console.log(res.data);
+  // const loadWishlist = () => {
+  //   getWishList(user?.token).then((res) => {
+  //     setWishlist(res.data.wishlist);
   //   });
   // };
-  useEffect(() => {
-    loadWishlist();
-  }, []);
+
   // useEffect(() => {
-  //   getCart();
+  //   loadWishlist();
   // }, []);
 
   const settings = {
@@ -82,16 +75,13 @@ const SliderProductCard = () => {
   };
 
   const handleAddToWishList = (pd) => {
-    let list = wishlist;
     addToWishList(pd._id, user.token).then((res) => {
-      list.push(...wishlist, pd);
-      let unique = _.uniqWith(list, _.isEqual);
-
-      dispatch({
-        type: "ADD_TO_WISHLIST",
-        payload: unique,
-      });
+      wishlist.push(...wishlist, pd);
+      let unique = _.uniqWith(wishlist, _.isEqual);
+       
       setWishlist(unique);
+    
+
     });
   };
 
@@ -109,7 +99,7 @@ const SliderProductCard = () => {
       <Slider {...settings}>
         {products.map((p) => {
           return (
-            <div className="card">
+            <div key={p._id} className="card">
               <img
                 src={p.images[0].url}
                 alt=""
@@ -133,10 +123,15 @@ const SliderProductCard = () => {
                 <br />
                 <div className="add-cart-fnc">
                   <div className="d-flex align-items-center justify-content-center container">
-                    <HeartOutlined
+                  <Tooltip title={user?toolTip: "login to add in your wishlist"}> {user?        <HeartOutlined
                       className="m-2 p-2 fs-5"
                       onClick={() => handleAddToWishList(p)}
-                    />{" "}
+                    />: <Link to="/login"><HeartOutlined
+                      className="m-2 p-2 fs-5"
+                     
+                    /></Link>}
+                    </Tooltip> 
+             
                     <EyeOutlined
                       className="m-2 p-2 fs-5"
                       onClick={() => history.push(`/product/${p.slug}`)}

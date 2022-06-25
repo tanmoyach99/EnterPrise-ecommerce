@@ -10,7 +10,7 @@ const CategoryListBanner = () => {
     <div className="mt-5 container row d-flex align-items-center justify-content-center offset-md-1">
       {categories.slice(0, 3).map((c) => {
         return (
-          <div className="bg-light d-flex col-md-3 p-4 m-1 rounded">
+          <div key={c._id} className="bg-light d-flex col-md-3 p-4 m-1 rounded">
             <div className="details">
               <h2 className="fw-normal">{c.name}</h2>
               <p className="text-secondary fw-bolder">

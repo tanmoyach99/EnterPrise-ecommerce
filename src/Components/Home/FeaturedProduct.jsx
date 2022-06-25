@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 
 const FeaturedProduct = () => {
   const [products, setProducts] = useState([]);
-  const history = useHistory();
+  // const history = useHistory();
 
   useEffect(() => {
     getProductsByCount(4).then((res) => setProducts(res.data));

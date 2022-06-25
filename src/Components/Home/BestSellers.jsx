@@ -31,7 +31,7 @@ const BestSellers = () => {
   return (
     <div className="container">
       {loading ? (
-        ""
+        <LoadingCard count={product.length}/>
       ) : (
         // <LoadingCard count={product.length} />
         <div className="row mb-5">
